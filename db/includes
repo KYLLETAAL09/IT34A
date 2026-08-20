@@ -1,0 +1,14 @@
+CREATE TABLE IF NOT EXITS activity_logs(
+    activity_log_id AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(255),
+    user_email VARCHAR(255),
+    activity_log_action VARCHAR(50) NOT NULL,
+    activity_log_status ENUM('successfull' 'failed') DEFAULT 'SUCCESS',
+    
+    -- Client Parameters
+    activity_log_ip_address VARCHAR(45),
+    activity_log_user_argent VARCHAR(255),
+
+    -- Timestamp
+    activity_log_created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
