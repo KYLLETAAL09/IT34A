@@ -35,3 +35,29 @@ user_updated_at TIMESTAMP
      ON UPDATE CURRENT_TIMESTAMP
 
 );
+INSERT INTO users
+(
+    user_email,
+    user_username,
+    user_password,
+    user_role
+)
+VALUES
+(
+    'admin@example.com',
+    'admin',
+    '$2y$10$HNfhClczEWBxcFuJwP53iu2Y75Tba7IEtmX8vX.1tp0dZ5EVt9CbO',
+    'admin'
+),
+(
+    'manager@example.com',
+    'manager',
+    '$2y$10$HNfhClczEWBxcFuJwP53iu2Y75Tba7IEtmX8vX.1tp0dZ5EVt9CbO',
+    'manager'
+),
+(
+    'user@example.com',
+    'user',
+    '$2y$10$HNfhClczEWBxcFuJwP53iu2Y75Tba7IEtmX8vX.1tp0dZ5EVt9CbO',
+    'user'
+);
