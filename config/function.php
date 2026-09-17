@@ -6,10 +6,11 @@ function redirect($path){
 }
 
 function loginUser($pdo, $login, $password){
-    // Application quer #2
+    // Application query #2
     $sql = "
         SELECT 
             user_id,
+            user_username,
             user_email,
             user_password,
             user_role
@@ -47,6 +48,7 @@ function requireLogin(){
     exit;
     }
 }
+
 function requireRole($role){
     requireLogin();
 
@@ -54,7 +56,6 @@ function requireRole($role){
         http_response_code(403);
         die("Access Denied");
     }
-};
-
+}
 
 ?>
