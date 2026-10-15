@@ -1,8 +1,8 @@
-<?php
+<?php 
 
 // Start user session
-function satartUsersSession($pdo){
-
+function startUserSession($pdo){
+    
     if(!isset($_SESSION['user_id'])){
         return false;
     }
@@ -10,47 +10,61 @@ function satartUsersSession($pdo){
     $user_id = $_SESSION['user_id'];
 
     $stmt = $pdo->prepare("
-       INSERT INTO user_sessions(
-           user_id,
-           session_start
-        )
-        VALUES(
+        INSERT INTO user_sessions(
+            user_id,
+            session_start
+        ) VALUES (
             :user_id,
             NOW()
         )
+    
+    ");
+
+    $stmt->execute([
+        ':user_id' => $user_id
+    ]);
+
+    return $pdo->lastInsertId();
+}
+function endUserSession($pdo){
+
+    $session_id = $_SESSION['session_id'];
+
+    $stmt = $pdo->prepare("
+        UPDATE user_sessions
+        SET
+            session_end=NOW(),
+            session_duration=TIMESTAMPDIFF(
+                SECOND,
+                session_start,
+                NOW()
+            )
+        WHERE session_id = :session_id
+    ");
+
+    return $stmt->execute([
+        'session_id' => $session_id
+    ]);
+
+}
+
+
+// Function check user for active session
+function hasActiveUserSession($pdo, $user_id){
+    $stmt = $pdo->prepare("
+        SELECT session_id
+        FROM user_sessions
+        WHERE user_id = :user_id
+        AND session_end IS NULL
+        LIMIT 1
     ");
 
     $stmt->execute([
         'user_id' => $user_id
     ]);
 
-    return $pdo->lastInsertId();
+    return (bool) $stmt->fetchColumn();
 }
 
-// End user session
-function endUsersSession($pdo){
-    if(!isset($_SESSION['session_id'])){
-        return false;
-    }
-    
-
-    $session_id = $_SESSION['session_id'];
-
-    $stmt = $pdo->prepare("
-        UPDATE user_sessions
-        SET 
-            session_end=NOW(),
-            session_duration=TIMESTAMPDIFF(
-                SECOND,
-                session,
-                NOW()
-            )
-        WHERE session_id = :session_id
-    ");
-     
-     return $stmt->execute([
-        'session_id' => $session_id
-     ]);
-}
 
 ?>
