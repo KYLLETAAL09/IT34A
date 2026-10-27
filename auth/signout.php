@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '../../config/config.php';
+require_once __DIR__ . '/../config/config.php';
 
 if(isset($_SESSION['user_id'])){
     logActivity(
@@ -10,6 +10,8 @@ if(isset($_SESSION['user_id'])){
         'success'
     );
 }
+
+endUserSession($pdo);
 $_SESSION =[];
 session_destroy();
 
