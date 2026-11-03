@@ -7,6 +7,6 @@
 </head>
 <body>
     <h1>Hello, Manager</h1>
-    <a href="../../../auth/signout.php">Sign out</a>
+    <a href="../../auth/signout.php">Sign out</a>
 </body>
 </html>
